@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@NamedQuery(name = "ottieniPrestitoDaTessera", query = "SELECT p FROM Prestito p WHERE p.utente.numeroTessera = :valore")
+@NamedQuery(name = "ottieniPrestitoDaTessera", query = "SELECT p FROM Prestito p WHERE p.utente.id = :valore")
 public class Prestito {
 
 	@Id

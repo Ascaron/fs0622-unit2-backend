@@ -25,12 +25,13 @@ public class GestioneArchivio {
 	private static final String gestioneArchivio = "M1w3progsettimanale";
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(gestioneArchivio);
 	private static final EntityManager em = emf.createEntityManager();
-	private static final EntityTransaction t = em.getTransaction();
 
 
 	public static void main(String[] args) {
 		
-		/*Libri l1=new Libri(1111, "libro1", 2002, 100, "autore1", Genere.FANTASY);
+		//PARTE ATTA A GENERARE DATI NEL DATABASE
+		
+		Libri l1=new Libri(1111, "libro1", 2002, 100, "autore1", Genere.FANTASY);
 		Libri l2=new Libri(1112, "libro2", 2003, 100, "autore2", Genere.GIALLO);
 		Libri l3=new Libri(1113, "libro3", 2004, 100, "autore3", Genere.STORIA);
 		LibriDAO.save(l1);
@@ -60,7 +61,7 @@ public class GestioneArchivio {
 		
 		Prestito p1=new Prestito();
 		p1.setUtente(u1);
-		ArticoloPubblicato ap= em.find(ArticoloPubblicato.class, 1);
+		ArticoloPubblicato ap= em.find(ArticoloPubblicato.class, 13);
 		p1.setElementoPrestato(ap);
 		p1.setDataInizioPrestito(LocalDate.of(2020, 5, 5));
 		p1.setDataRestituzionePrevista(p1.getDataInizioPrestito().plusDays(30));
@@ -69,19 +70,21 @@ public class GestioneArchivio {
 		
 		Prestito p2=new Prestito();
 		p2.setUtente(u2);
-		ArticoloPubblicato ap2= em.find(ArticoloPubblicato.class, 1);
+		ArticoloPubblicato ap2= em.find(ArticoloPubblicato.class, 14);
 		p2.setElementoPrestato(ap2);
 		p2.setDataInizioPrestito(LocalDate.of(2020, 7, 7));
 		p2.setDataRestituzionePrevista(p2.getDataInizioPrestito().plusDays(30));
 		p2.setDataRestituzioneEffettiva(LocalDate.of(2020, 8, 20));
-		PrestitoDAO.save(p2);*/
+		PrestitoDAO.save(p2);
 		
-		//ArticoloPubblicatoDAO.ottieniElementoDaISBN(1111);
-		//ArticoloPubblicatoDAO.ottieniElementoDaAnnoPubblicazione(2002);
-		//ArticoloPubblicatoDAO.eliminaArticolo(2);
-		//LibriDAO.ottieniElementoDaAutore("Pino");
-		//ArticoloPubblicatoDAO.ottieniElementoDaTitolo("Alto");
-		//PrestitoDAO.ottieniPrestitoDaTessera(111);
+		//PARTE DI RICHIAMO DEI METODI
+		
+		ArticoloPubblicatoDAO.ottieniElementoDaISBN(1111);
+		ArticoloPubblicatoDAO.ottieniElementoDaAnnoPubblicazione(2002);
+		ArticoloPubblicatoDAO.eliminaArticolo(16);
+		LibriDAO.ottieniElementoDaAutore("autore1");
+		ArticoloPubblicatoDAO.ottieniElementoDaTitolo("libro1");
+		PrestitoDAO.ottieniPrestitoDaTessera(5);
 		
 	}
 

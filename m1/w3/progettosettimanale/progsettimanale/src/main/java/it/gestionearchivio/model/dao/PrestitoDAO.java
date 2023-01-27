@@ -8,7 +8,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.gestionearchivio.model.ArticoloPubblicato;
 import it.gestionearchivio.model.Prestito;
 
 public class PrestitoDAO {
@@ -40,8 +39,8 @@ public class PrestitoDAO {
 	    	
 	    	List<Prestito> res = q.getResultList();
 	    	
-	    	for(Prestito ap:res) {
-	    		System.out.println(ap);
+	    	for(Prestito p:res) {
+	    		System.out.println("Id del prestito: "+ p.getId());
 	    	}
 	    	
 	    }
