@@ -1,0 +1,73 @@
+package com.epicode.andreacursi.gestionedispositivi.configuration;
+
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.epicode.andreacursi.gestionedispositivi.entities.Ruolo;
+import com.epicode.andreacursi.gestionedispositivi.entities.Utente;
+import com.epicode.andreacursi.gestionedispositivi.services.UtenteService;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private UtenteService uteSe;
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+		http
+			.authorizeRequests()					
+				.antMatchers( "/", "/saluto").permitAll()
+				.antMatchers(HttpMethod.GET, "/pagina1").hasRole("ADMIN")
+			.anyRequest()
+				.authenticated()
+			.and()
+			.formLogin()
+				.successForwardUrl("/login_success")
+			.and()
+			.logout()
+			.and()
+			.csrf()
+				.disable();
+	}
+	
+	// COMMENTARE PRE POPOLAMENTO DB E SCOMMENTARE DOPO AVER POPOLATO IL DB
+	@Override
+	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+		//QUI SI DEFINISCE L'UTENTE CHE PUò ACCEDERE
+		Optional<Utente> autoUtenteObj = uteSe.ottieniDaId(1);
+		Utente autoUtente = autoUtenteObj.get();
+		String ruolo = "USER";
+		Set<Ruolo> ruoli = autoUtente.getRuolo();
+		
+		for( Ruolo r : ruoli ) {
+			if( r.getTipo().toString().contains("ADMIN") ) {
+				ruolo = "ADMIN";
+				break;
+			}
+		}
+		
+		auth.inMemoryAuthentication()
+			.withUser( autoUtente.getUsername() ).password( passwordEncoder().encode( autoUtente.getPassword() ) )
+			.roles(ruolo);
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+}
