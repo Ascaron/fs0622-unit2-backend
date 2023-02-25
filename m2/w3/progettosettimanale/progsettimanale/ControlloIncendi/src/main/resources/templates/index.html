@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it" xmlns="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controllo Incendi</title>
+<style>
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1, li {
+	color: red;
+}
+
+li {
+	font-size: large;
+}
+</style>
+</head>
+
+<body>
+	<h1>RESPONSO</h1>
+	<hr>
+	<ul>
+		<li>Id sonda emettitrice:<span th:text="${idSonda}"></span></li>
+		<hr>
+		<li>Latitudine sonda:<span th:text="${lanSonda}"></span></li>
+		<hr>
+		<li>Longitudine sonda:<span th:text="${lonSonda}"></span></li>
+		<hr>
+		<li>Incendio/i:<span th:text="${incendio}"></span></li>
+	</ul>
+
+</body>
+</html>
